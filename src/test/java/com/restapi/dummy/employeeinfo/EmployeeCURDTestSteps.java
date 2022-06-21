@@ -1,7 +1,7 @@
 package com.restapi.dummy.employeeinfo;
 
 import com.restapi.dummy.testbase.TestBase;
-import com.restapi.dummy.utils.TestUtils;
+
 import io.restassured.response.ValidatableResponse;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
@@ -16,8 +16,8 @@ import static org.hamcrest.Matchers.hasValue;
 @RunWith(SerenityRunner.class)
 public class EmployeeCURDTestSteps extends TestBase {
     static String employee_name = "test" ;
-    static String employee_salary = "45000";
-    static String employee_age="36";
+    static int employee_salary = Integer.parseInt("45000");
+    static int employee_age= Integer.parseInt("36");
     static int employeeId;
 
     @Steps
@@ -26,7 +26,7 @@ public class EmployeeCURDTestSteps extends TestBase {
     @Title("This will create a new employee")
     @Test
     public void test001() {
-        ValidatableResponse response=employeeSteps.createEmployee(employee_name,employee_salary,employee_age);
+        ValidatableResponse response=employeeSteps.createEmployee(employee_name,employee_salary, Integer.parseInt(String.valueOf(employee_age)));
         response.log().all().statusCode(200);
     }
 
@@ -43,10 +43,10 @@ public class EmployeeCURDTestSteps extends TestBase {
     @Test
     public void test003(){
         employee_name = "test1";
-        employee_salary="60000";
-        employee_age="24";
+        employee_salary= Integer.parseInt("60000");
+        employee_age= Integer.parseInt("24");
         employeeId=6695;
-        employeeSteps.updateEmployee(employeeId,employee_name,employee_salary,employee_age).log().all().statusCode(200);
+        employeeSteps.updateEmployee(employeeId,employee_name, Integer.parseInt(String.valueOf(employee_salary)),employee_age).log().all().statusCode(200);
     }
 
     @Title("Delete the employee and verify if the employee is deleted! for ID=2")

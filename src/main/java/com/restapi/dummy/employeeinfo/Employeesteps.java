@@ -11,11 +11,11 @@ import java.util.HashMap;
 
 public class Employeesteps {
     @Step("Creating employee with employee_name : {0}, employee_salary: {1}, employee_age:{2}")
-    public ValidatableResponse createEmployee(String employee_name, String employee_salary, String employee_age) {
+    public ValidatableResponse createEmployee(String employee_name, int employee_salary, int employee_age) {
         EmployeePojo employeePojo = new EmployeePojo();
         employeePojo.setName(employee_name);
-        employeePojo.setSalary(employee_salary);
-        employeePojo.setAge(employee_age);
+        employeePojo.setSalary(String.valueOf(employee_salary));
+        employeePojo.setAge(String.valueOf(employee_age));
 
         return SerenityRest.given().log().all()
                 .contentType(ContentType.JSON)
@@ -39,11 +39,11 @@ public class Employeesteps {
     }
 
     @Step("Updating employee information with employeeId: {0}, employee_name: {1}, employee_salary: {2},employee_age: {3}")
-    public ValidatableResponse updateEmployee(int employeeId, String employee_name, String employee_salary, String employee_age) {
+    public ValidatableResponse updateEmployee(int employeeId, String employee_name, int employee_salary, int employee_age) {
         EmployeePojo employeePojo = new EmployeePojo();
         employeePojo.setName(employee_name);
-        employeePojo.setSalary(employee_salary);
-        employeePojo.setAge(employee_age);
+        employeePojo.setSalary(String.valueOf(employee_salary));
+        employeePojo.setAge(String.valueOf(employee_age));
         return SerenityRest.given().log().all()
                 .contentType(ContentType.JSON)
                 .pathParam("employeeID", employeeId)
@@ -59,6 +59,14 @@ public class Employeesteps {
                 .pathParam("employeeID", employeeId)
                 .when()
                 .delete(EndPoints.DELETE_EMPLOYEE_BY_ID)
+                .then();
+    }
+    @Step ("get single employee by id : {3}")
+    public ValidatableResponse getSingleEmployee(int id){
+        return SerenityRest.given().log().all()
+                .pathParam("employeeId",id)
+                .when()
+                .get(EndPoints.GET_SINGLE_EMPLOYEE_BY_ID)
                 .then();
     }
 }
